@@ -21,10 +21,9 @@ public class NIOServer {
         int ops = serverSocketChannel.validOps();
         SelectionKey selectionKey = serverSocketChannel.register(selector, ops, null);
 
-        
+        log("[SERVER]: Waiting for clients...");
+
         while(true){
-            
-            log("[SERVER]: Waiting for clients...");
 
             selector.select();
 
@@ -47,14 +46,23 @@ public class NIOServer {
 
                     SocketChannel client = (SocketChannel) myKey.channel();
                     ByteBuffer buffer = ByteBuffer.allocate(256);
-                    client.read(buffer);
+                    int bytesRead = client.read(buffer);
 
-                    String result = new String(buffer.array()).trim();
-                    log("[SERVER] Message received: " + result);
-                    
-                    if(result.equals("end")){
-                        log("[SERVER] Closing conection...");
+                    if (bytesRead == -1) {
+                        // Connection closed by client
+                        log("[SERVER] Connection closed by client.");
+                        myKey.cancel();
                         client.close();
+                    } else if (bytesRead > 0) {
+                        buffer.flip();
+                        String result = new String(buffer.array()).trim();
+                        log("[SERVER] Message received: " + result);
+
+                        if (result.equals("end")) {
+                            log("[SERVER] Closing connection...");
+                            myKey.cancel();
+                            client.close();
+                        }
                     }
                 }
                 iterator.remove();

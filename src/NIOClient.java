@@ -28,7 +28,7 @@ public class NIOClient {
             byte[] message = new String(s).getBytes();
             buffer = ByteBuffer.wrap(message);
             client.write(buffer);
-            log("[CLIENT] I'm sending "+ s + "messages to the server.");
+            log("[CLIENT] I'm sending "+ s + " to the server.");
             buffer.clear();
 
             Thread.sleep(1000);
