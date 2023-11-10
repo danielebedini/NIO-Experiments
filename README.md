@@ -3,6 +3,8 @@
 
 ### How does it work?
 
+In a few words, a server is always waiting for a client for establish a connection. Once established, the client starts to send messages to the server in a non-blocking manner. This is possible thanks to the package Java NIO, that gives us the possibility to share messages without blocking the whole communication.
+
 #### Server
 
 This is how the server works: 
