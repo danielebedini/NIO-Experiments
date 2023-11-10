@@ -3,7 +3,7 @@
 
 ### How does it work?
 
-##### Server
+#### Server
 
 This is how the server works: 
 - opens the selector: _Selector.open()_
