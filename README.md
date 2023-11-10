@@ -24,7 +24,7 @@ In this _while_:
     - first flips the buffer poiters in order to start reading (sets _position_ and _limit_ poiter)
     - when the server reads "end" or there are no bytes left to read, it closes the connection with the client
 
-##### Client
+#### Client
 
 - opens the _socketChannel_ at the address "localhost" at the port 9999
 - sets up an _ArrayList<String>_ 
